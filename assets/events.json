@@ -1,0 +1,74 @@
+[
+  {
+    "date": "13 травня 2020",
+    "title": "IND Beauty Antisalon",
+    "timeStart": "8:00",
+    "timeEnd": "12:00",
+    "status": "CANCELED",
+    "price": "400 UAH",
+    "workerName": "Анна Турапіна",
+    "rating": 9.5,
+    "businessName": "IND Beauty Antisalon",
+    "address": "вул. Пирогова, 115а"
+  },
+  {
+    "date": "16 травня 2020",
+    "title": "IND Beauty Antisalon",
+    "timeStart": "10:00",
+    "timeEnd": "20:00",
+    "status": "EXPECTATION",
+    "price": "300 UAH",
+    "workerName": "Анна Турапіна",
+    "rating": 3.5,
+    "businessName": "IND Beauty Antisalon",
+    "address": "Киев, ул. Андреевская, 2/12"
+  },
+  {
+    "date": "6 січня 2020",
+    "title": "Meraki",
+    "timeStart": "8:00",
+    "timeEnd": "17:00",
+    "status": "CANCELED",
+    "price": "100 UAH",
+    "workerName": "Анна Турапіна",
+    "rating": 6.5,
+    "businessName": "IND Beauty Antisalon",
+    "address": "Киев, ул. Б. Васильковская, 100"
+  },
+  {
+    "date": "26 грудня 2019",
+    "title": "Jayus",
+    "timeStart": "13:00",
+    "timeEnd": "21:00",
+    "status": "EXPECTATION",
+    "price": "10000 UAH",
+    "workerName": "Анна Турапіна",
+    "rating": 4.5,
+    "businessName": "IND Beauty Antisalon",
+    "address": "Львов, ул. Сахарова, 78"
+  },
+  {
+    "date": "3 вересня 2019",
+    "title": "Lagom Hair Lounge",
+    "timeStart": "10:00",
+    "timeEnd": "12:00",
+    "status": "CANCELED",
+    "price": "120 UAH",
+    "workerName": "Анна Турапіна",
+    "rating": 1.5,
+    "businessName": "IND Beauty Antisalon",
+    "address": "Харьков, ул. Алчевских, 30"
+  },
+  {
+    "date": "1 червня 2020",
+    "title": "Color & Curls",
+    "timeStart": "8:00",
+    "timeEnd": "12:00",
+    "status": "EXPECTATION",
+    "price": "1300 UAH",
+    "workerName": "Анна Турапіна",
+    "rating": 3.5,
+    "businessName": "IND Beauty Antisalon",
+    "address": "вул. Пирогова, 115а"
+  }
+]

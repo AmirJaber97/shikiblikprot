@@ -1,0 +1,47 @@
+[
+  {
+    "id": 1,
+    "name": "IND Beauty Antisalon",
+    "distance": "5",
+    "address": "вул. Пирогова, 115а, Вінниця",
+    "images": "https://picsum.photos/200/300",
+    "ratings": 4.4,
+    "quantityReviews": "100"
+  },
+  {
+    "id": 2,
+    "name": "Meraki",
+    "distance": "3",
+    "address": "Киев, ул. Андреевская, 2/12",
+    "images": "https://picsum.photos/200/300",
+    "ratings": 2.4,
+    "quantityReviews": "121"
+  },
+  {
+    "id": 3,
+    "name": "Jayus",
+    "distance": "22",
+    "address": "Киев, ул. Б. Васильковская, 100",
+    "images": "https://picsum.photos/200/300",
+    "ratings": 3.4,
+    "quantityReviews": "23"
+  },
+  {
+    "id": 4,
+    "name": "Lagom Hair Lounge",
+    "distance": "33",
+    "address": "Львов, ул. Сахарова, 78",
+    "images": "https://picsum.photos/200/300",
+    "ratings": 5.0,
+    "quantityReviews": "78"
+  },
+  {
+    "id": 5,
+    "name": "Color & Curls ",
+    "distance": "199",
+    "address": "Харьков, ул. Алчевских, 30",
+    "images": "https://picsum.photos/200/300",
+    "ratings": 4.4,
+    "quantityReviews": "399"
+  }
+]

@@ -1,0 +1,56 @@
+name: shik_i_blisk
+description: Shik i Blisk Prototype
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+  # core
+  logger: ^0.9.1
+  intl: ^0.16.1
+  get: ^3.3.0
+  get_it: ^4.0.2
+  dio: ^3.0.9
+  provider: ^4.1.3+1
+  json_annotation: ^3.0.1
+  hive: 1.4.1+1
+  hive_flutter: 0.3.0+2
+  dartz: ^0.9.1
+  flutter_screenutil: ^1.1.0
+
+  # widgets
+  cupertino_icons: ^0.1.3
+  sliding_up_panel: ^1.0.2
+  carousel_slider: ^2.2.1
+
+  # services
+  connectivity: ^0.4.9
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_launcher_icons: ^0.7.5
+  json_serializable: ^3.3.0
+
+flutter_icons:
+  ios: true
+  android: true
+  image_path_ios: "assets/launcher/icon.png"
+  image_path_android: "assets/launcher/icon.png"
+  adaptive_icon_background: "assets/launcher/background.png"
+  adaptive_icon_foreground: "assets/launcher/foreground.png"
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/
+    - i18n/en.json
+    - i18n/ru.json
+    - i18n/uk.json

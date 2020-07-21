@@ -33,6 +33,7 @@ dependencies:
 
   # services
   connectivity: ^0.4.9
+  audioplayers: ^0.15.1
 
 dev_dependencies:
   flutter_test:
@@ -52,6 +53,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/
+    - assets/tick.mp3
     - i18n/en.json
     - i18n/ru.json
     - i18n/uk.json

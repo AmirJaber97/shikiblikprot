@@ -1,5 +1,6 @@
 import 'package:animate_icons/animate_icons.dart';
-import 'package:carousel_slider/carousel_slider.dart';
+import 'package:audioplayers/audio_cache.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,6 +16,7 @@ import 'package:shik_i_blisk/ui/setup/app_base_widget.dart';
 import 'package:shik_i_blisk/ui/setup/routes.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
+import '../../app/logger.dart';
 import '../../constants/app_colors.dart';
 import '../../constants/app_routes.dart';
 
@@ -23,12 +25,20 @@ class HomeView extends StatefulWidget {
   _HomeViewState createState() => _HomeViewState();
 }
 
-class _HomeViewState extends State<HomeView> with TickerProviderStateMixin{
-  String currentPage = RoutePaths.MainPage;
+class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
+  var logger = getLogger("HomeView");
 
-  var _panelController;
+  String currentPage = RoutePaths.MainPage;
+  PanelController _panelController;
   AnimateIconController _animationController;
+  ScrollController _scrollController;
   bool isClosed = true;
+  double _scrollPosition;
+  double _oldScrollPosition = 0;
+  double _newScrollPosition = 232;
+//  AudioPlayer _audioPlayer;
+  double scrollOffset = 232.0;
+  AudioCache _audioCache;
 
   Widget generateCard(String tag, Color color, int notificationCount,
       String routePath, PanelController controller) {
@@ -50,7 +60,7 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin{
                 }
               },
               child: Container(
-                  height: 300.h,
+                  height: 250.h,
                   width: 200.w,
                   color: color,
                   child: Center(child: Text(tag))),
@@ -85,6 +95,30 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin{
     super.initState();
     _panelController = PanelController();
     _animationController = AnimateIconController();
+    _scrollController = ScrollController();
+//    _audioPlayer = AudioPlayer();
+    _audioCache = AudioCache();
+
+    _scrollController.addListener(_scrollListener);
+  }
+
+  playLocal() async {
+    await _audioCache.play('/tick.mp3');
+  }
+
+  _scrollListener() {
+//    _scrollPosition = _scrollController.position.pixels;
+//    if((_scrollPosition) > _newScrollPosition){
+//      playLocal();
+//      _oldScrollPosition = _newScrollPosition;
+//      _newScrollPosition += scrollOffset;
+//    }
+//    if((_newScrollPosition -_scrollPosition))
+//      if ( > _newScrollPosition) {
+//        logger.i("Playing..");
+//        _newScrollPosition += 200;
+//          playLocal();
+//      }
   }
 
   @override
@@ -117,21 +151,20 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin{
           ];
 
           return SlidingUpPanel(
+            minHeight: 100.h,
+            maxHeight: 350.h,
             backdropEnabled: true,
             parallaxEnabled: true,
             controller: _panelController,
             onPanelOpened: () {
               setState(() {
-                isClosed = false;
+                _animationController.animateToEnd();
               });
             },
             onPanelClosed: () {
               setState(() {
-                isClosed = true;
+                _animationController.animateToStart();
               });
-            },
-            onPanelSlide: (double){
-              isClosed ? _animationController.animateToEnd() : _animationController.animateToStart();
             },
             header: Container(
               width: MediaQuery.of(context).size.width,
@@ -141,33 +174,42 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin{
                 endIcon: Icons.keyboard_arrow_down,
                 controller: _animationController,
                 size: 40.0,
-                duration: Duration(milliseconds: 500),
-                color: Theme.of(context).primaryColor,
+                duration: Duration(milliseconds: 100),
+                color: kBlackColor,
                 clockwise: false,
+                onStartIconPress: () {
+                  _panelController.open();
+                  _animationController.animateToEnd();
+                  return true;
+                },
+                onEndIconPress: () {
+                  _panelController.close();
+                  _animationController.animateToStart();
+                  return true;
+                },
               ),
             ),
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(40.0),
                 topRight: Radius.circular(40.0)),
             panel: Center(
-                child: CarouselSlider(
-                    items: items,
-                    options: CarouselOptions(
-                      height: 400,
-                      aspectRatio: 2.0,
-                      viewportFraction: 0.62,
-                      initialPage: 0,
-                      enableInfiniteScroll: false,
-                      reverse: false,
-                      enlargeCenterPage: false,
-                      scrollDirection: Axis.horizontal,
-                    ))),
-            body: Padding(
-              padding: const EdgeInsets.only(bottom: 100.0),
-              child: Center(
-                child: page,
-              ),
-            ),
+                child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                SizedBox(
+                  height: 50.h,
+                ),
+                Expanded(
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    shrinkWrap: true,
+                    children: items,
+                    controller: _scrollController,
+                  ),
+                )
+              ],
+            )),
+            body: page,
           );
         },
       ),

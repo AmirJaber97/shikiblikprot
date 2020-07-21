@@ -5,6 +5,8 @@ import 'package:shik_i_blisk/constants/app_colors.dart';
 import 'package:shik_i_blisk/constants/app_styles.dart';
 import 'package:shik_i_blisk/ui/home/pages/components/indicator.dart';
 
+import '../../../constants/app_colors.dart';
+
 class Page1 extends StatefulWidget {
   @override
   _Page1State createState() => _Page1State();
@@ -37,104 +39,47 @@ class _Page1State extends State<Page1> {
       backgroundColor: Colors.orangeAccent,
       body: Column(
         children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(right: 24.0),
-                child: IconButton(
-                  icon: Hero(
-                    tag: 'faq',
-                    child: Icon(
-                      Icons.info_outline,
-                      color: kWhiteColor,
-                      size: 40.sp,
-                    ),
-                  ),
-                  onPressed: () {
-                    navigator.push(MaterialPageRoute(
-                      builder: (BuildContext context) {
-                        return GestureDetector(
-                          onTap: () => Get.back(),
-                          child: Scaffold(
-                            backgroundColor: Colors.purple,
-                            body: Center(
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  Hero(
-                                    tag: "faq",
-                                    child: Icon(
-                                      Icons.info_outline,
-                                      color: kWhiteColor,
-                                      size: 50.sp,
-                                    ),
-                                  ),
-                                  Text(
-                                    'FAQ',
-                                    style: text(40.sp,
-                                        color: kWhiteColor,
-                                        fw: FontWeight.bold),
-                                  )
-                                ],
-                              ),
+          _buildHeader(),
+          Expanded(
+            child: Column(
+              children: <Widget>[
+                Container(
+                  height: MediaQuery.of(context).size.height - 230.h,
+                  child: Stack(
+                    children: <Widget>[
+                      PageView.builder(
+                        itemCount: 3,
+                        controller: _controller,
+                        itemBuilder: (BuildContext context, int index) {
+                          return _pages.elementAt(index);
+                        },
+                      ),
+                      Positioned(
+                        bottom: 30.h,
+                        left: 0.0,
+                        right: 0.0,
+                        child: Container(
+                          padding: const EdgeInsets.all(20.0),
+                          child: Center(
+                            child: DotsIndicator(
+                              controller: _controller,
+                              itemCount: _pages.length,
+                              color: kBlackColor,
+                              onPageSelected: (int page) {
+                                _controller.animateToPage(
+                                  page,
+                                  duration: _kDuration,
+                                  curve: _kCurve,
+                                );
+                              },
                             ),
                           ),
-                        );
-                      },
-                    ));
-                  },
-                ),
-              )
-            ],
-          ),
-          Row(
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(left: 50.0, bottom: 50.0),
-                child: Text(
-                  "Page 1",
-                  style: text(24.sp, fw: FontWeight.bold, color: kWhiteColor),
-                ),
-              )
-            ],
-          ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 65.0),
-              child: Stack(
-                children: <Widget>[
-                  PageView.builder(
-                    itemCount: 3,
-                    controller: _controller,
-                    itemBuilder: (BuildContext context, int index) {
-                      return _pages.elementAt(index);
-                    },
-                  ),
-                  Positioned(
-                    bottom: 30.0,
-                    left: 0.0,
-                    right: 0.0,
-                    child: Container(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Center(
-                        child: DotsIndicator(
-                          controller: _controller,
-                          itemCount: _pages.length,
-                          color: kBlackColor,
-                          onPageSelected: (int page) {
-                            _controller.animateToPage(
-                              page,
-                              duration: _kDuration,
-                              curve: _kCurve,
-                            );
-                          },
                         ),
                       ),
-                    ),
-                  )
-                ],
-              ),
+                    ],
+                  ),
+                ),
+              ],
             ),
           ),
         ],
@@ -142,32 +87,104 @@ class _Page1State extends State<Page1> {
     );
   }
 
-  static _buildPage(String tag, String pageName) {
-    return Container(
-      color: kWhiteColor,
-      child: Center(
-          child: Hero(
-              tag: tag,
-              child: GestureDetector(
-                onTap: () {
+  Widget _buildHeader() {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(right: 24.0),
+              child: IconButton(
+                icon: Hero(
+                  tag: 'faq',
+                  child: Icon(
+                    Icons.info_outline,
+                    color: kWhiteColor,
+                    size: 40.sp,
+                  ),
+                ),
+                onPressed: () {
                   navigator.push(MaterialPageRoute(
                     builder: (BuildContext context) {
-                      return buildSubPages(tag, pageName);
+                      return GestureDetector(
+                        onTap: () => Get.back(),
+                        child: Scaffold(
+                          backgroundColor: Colors.purple,
+                          body: Center(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                Hero(
+                                  tag: "faq",
+                                  child: Icon(
+                                    Icons.info_outline,
+                                    color: kWhiteColor,
+                                    size: 50.sp,
+                                  ),
+                                ),
+                                Text(
+                                  'FAQ',
+                                  style: text(40.sp,
+                                      color: kWhiteColor, fw: FontWeight.bold),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      );
                     },
                   ));
                 },
-                child: Container(
-                    decoration: BoxDecoration(
-                        color: Colors.purple,
-                        borderRadius: BorderRadius.all(Radius.circular(30.0))),
-                    child: Padding(
-                      padding: const EdgeInsets.all(50.0),
-                      child: Text(
-                        pageName,
-                        style: text(14.sp, color: kWhiteColor),
-                      ),
-                    )),
-              ))),
+              ),
+            )
+          ],
+        ),
+        Row(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(left: 50.0, bottom: 50.0),
+              child: Text(
+                "Page 1",
+                style: text(24.sp, fw: FontWeight.bold, color: kWhiteColor),
+              ),
+            )
+          ],
+        ),
+      ],
+    );
+  }
+
+  static _buildPage(String tag, String pageName) {
+    return Expanded(
+      child: Container(
+        color: kWhiteColor,
+        child: Center(
+            child: Hero(
+                tag: tag,
+                child: GestureDetector(
+                  onTap: () {
+                    navigator.push(MaterialPageRoute(
+                      builder: (BuildContext context) {
+                        return buildSubPages(tag, pageName);
+                      },
+                    ));
+                  },
+                  child: Container(
+                      decoration: BoxDecoration(
+                          color: Colors.purple,
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(30.0))),
+                      child: Padding(
+                        padding: const EdgeInsets.all(50.0),
+                        child: Text(
+                          pageName,
+                          style: text(14.sp, color: kWhiteColor),
+                        ),
+                      )),
+                ))),
+      ),
     );
   }
 

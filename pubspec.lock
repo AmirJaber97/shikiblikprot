@@ -15,6 +15,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.39.13"
+  animate_icons:
+    dependency: "direct main"
+    description:
+      name: animate_icons
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.4"
   archive:
     dependency: transitive
     description:

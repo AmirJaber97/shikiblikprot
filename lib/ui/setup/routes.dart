@@ -34,13 +34,13 @@ class Routes {
 
     switch (settings.name) {
       case RoutePaths.MainPage:
-        return CupertinoPageRoute(builder: (_) => MainPage());
+        return MaterialPageRoute(builder: (_) => MainPage());
       case RoutePaths.Page1:
-        return CupertinoPageRoute(builder: (_) => Page1());
+        return MaterialPageRoute(builder: (_) => Page1());
       case RoutePaths.Page2:
-        return CupertinoPageRoute(builder: (_) => Page2());
+        return MaterialPageRoute(builder: (_) => Page2());
       case RoutePaths.Page3:
-        return CupertinoPageRoute(builder: (_) => Page3());
+        return MaterialPageRoute(builder: (_) => Page3());
       default:
         return MaterialPageRoute(
             builder: (_) => Scaffold(

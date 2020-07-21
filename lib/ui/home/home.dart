@@ -1,5 +1,7 @@
+import 'package:animate_icons/animate_icons.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:get/get.dart';
@@ -13,9 +15,23 @@ import 'package:shik_i_blisk/ui/setup/app_base_widget.dart';
 import 'package:shik_i_blisk/ui/setup/routes.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
-class HomeView extends StatelessWidget {
-  Widget generateCard(
-      String tag, Color color, int notificationCount, String routePath) {
+import '../../constants/app_colors.dart';
+import '../../constants/app_routes.dart';
+
+class HomeView extends StatefulWidget {
+  @override
+  _HomeViewState createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> with TickerProviderStateMixin{
+  String currentPage = RoutePaths.MainPage;
+
+  var _panelController;
+  AnimateIconController _animationController;
+  bool isClosed = true;
+
+  Widget generateCard(String tag, Color color, int notificationCount,
+      String routePath, PanelController controller) {
     return Stack(
       children: <Widget>[
         Hero(
@@ -27,7 +43,11 @@ class HomeView extends StatelessWidget {
             ),
             child: InkWell(
               onTap: () {
-                Get.offAndToNamed(routePath, id: 0);
+                controller.close();
+                if (routePath != currentPage) {
+                  Get.offAndToNamed(routePath, id: 0);
+                  currentPage = routePath;
+                }
               },
               child: Container(
                   height: 300.h,
@@ -61,6 +81,13 @@ class HomeView extends StatelessWidget {
   }
 
   @override
+  void initState() {
+    super.initState();
+    _panelController = PanelController();
+    _animationController = AnimateIconController();
+  }
+
+  @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context, width: 360, height: 640);
     var locale = AppLocalizations.of(context);
@@ -79,13 +106,46 @@ class HomeView extends StatelessWidget {
         viewModel: HomeViewModel(),
         builder: (_, model, __) {
           List<Widget> items = [
-            generateCard('home', Colors.purple, null, RoutePaths.MainPage),
-            generateCard('Page 1', Colors.orangeAccent, 21, RoutePaths.Page1),
-            generateCard('Page 2', Colors.greenAccent, 999, RoutePaths.Page2),
-            generateCard('Page 3', Colors.limeAccent, null, RoutePaths.Page3),
+            generateCard('home', Colors.purple, null, RoutePaths.MainPage,
+                _panelController),
+            generateCard('Page 1', Colors.orangeAccent, 21, RoutePaths.Page1,
+                _panelController),
+            generateCard('Page 2', Colors.greenAccent, 999, RoutePaths.Page2,
+                _panelController),
+            generateCard('Page 3', Colors.limeAccent, null, RoutePaths.Page3,
+                _panelController),
           ];
 
           return SlidingUpPanel(
+            backdropEnabled: true,
+            parallaxEnabled: true,
+            controller: _panelController,
+            onPanelOpened: () {
+              setState(() {
+                isClosed = false;
+              });
+            },
+            onPanelClosed: () {
+              setState(() {
+                isClosed = true;
+              });
+            },
+            onPanelSlide: (double){
+              isClosed ? _animationController.animateToEnd() : _animationController.animateToStart();
+            },
+            header: Container(
+              width: MediaQuery.of(context).size.width,
+              alignment: Alignment.center,
+              child: AnimateIcons(
+                startIcon: Icons.keyboard_arrow_up,
+                endIcon: Icons.keyboard_arrow_down,
+                controller: _animationController,
+                size: 40.0,
+                duration: Duration(milliseconds: 500),
+                color: Theme.of(context).primaryColor,
+                clockwise: false,
+              ),
+            ),
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(40.0),
                 topRight: Radius.circular(40.0)),

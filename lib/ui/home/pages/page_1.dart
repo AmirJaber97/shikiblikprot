@@ -1,10 +1,9 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:shik_i_blisk/constants/app_colors.dart';
 import 'package:shik_i_blisk/constants/app_styles.dart';
+import 'package:shik_i_blisk/ui/home/pages/components/indicator.dart';
 
 class Page1 extends StatefulWidget {
   @override
@@ -53,10 +52,11 @@ class _Page1State extends State<Page1> {
                     ),
                   ),
                   onPressed: () {
-
-                      navigator.push(MaterialPageRoute(
-                        builder: (BuildContext context) {
-                          return Scaffold(
+                    navigator.push(MaterialPageRoute(
+                      builder: (BuildContext context) {
+                        return GestureDetector(
+                          onTap: () => Get.back(),
+                          child: Scaffold(
                             backgroundColor: Colors.purple,
                             body: Center(
                               child: Column(
@@ -70,16 +70,19 @@ class _Page1State extends State<Page1> {
                                       size: 50.sp,
                                     ),
                                   ),
-                                  Text('FAQ', style: text(40.sp, color: kWhiteColor, fw: FontWeight.bold),)
+                                  Text(
+                                    'FAQ',
+                                    style: text(40.sp,
+                                        color: kWhiteColor,
+                                        fw: FontWeight.bold),
+                                  )
                                 ],
                               ),
                             ),
-                          );
-                        },
-                      ));
-
-
-
+                          ),
+                        );
+                      },
+                    ));
                   },
                 ),
               )
@@ -114,8 +117,8 @@ class _Page1State extends State<Page1> {
                     right: 0.0,
                     child: Container(
                       padding: const EdgeInsets.all(20.0),
-                      child: new Center(
-                        child: new DotsIndicator(
+                      child: Center(
+                        child: DotsIndicator(
                           controller: _controller,
                           itemCount: _pages.length,
                           color: kBlackColor,
@@ -218,71 +221,6 @@ class _Page1State extends State<Page1> {
           ),
         ),
       ),
-    );
-  }
-}
-
-class DotsIndicator extends AnimatedWidget {
-  DotsIndicator({
-    this.controller,
-    this.itemCount,
-    this.onPageSelected,
-    this.color: Colors.white,
-  }) : super(listenable: controller);
-
-  /// The PageController that this DotsIndicator is representing.
-  final PageController controller;
-
-  /// The number of items managed by the PageController
-  final int itemCount;
-
-  /// Called when a dot is tapped
-  final ValueChanged<int> onPageSelected;
-
-  /// The color of the dots.
-  ///
-  /// Defaults to `Colors.white`.
-  final Color color;
-
-  // The base size of the dots
-  static const double _kDotSize = 8.0;
-
-  // The increase in the size of the selected dot
-  static const double _kMaxZoom = 2.0;
-
-  // The distance between the center of each dot
-  static const double _kDotSpacing = 25.0;
-
-  Widget _buildDot(int index) {
-    double selectedness = Curves.easeOut.transform(
-      max(
-        0.0,
-        1.0 - ((controller.page ?? controller.initialPage) - index).abs(),
-      ),
-    );
-    double zoom = 1.0 + (_kMaxZoom - 1.0) * selectedness;
-    return new Container(
-      width: _kDotSpacing,
-      child: new Center(
-        child: new Material(
-          color: color,
-          type: MaterialType.circle,
-          child: new Container(
-            width: _kDotSize * zoom,
-            height: _kDotSize * zoom,
-            child: new InkWell(
-              onTap: () => onPageSelected(index),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget build(BuildContext context) {
-    return new Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: new List<Widget>.generate(itemCount, _buildDot),
     );
   }
 }

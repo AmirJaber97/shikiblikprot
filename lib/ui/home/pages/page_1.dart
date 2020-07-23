@@ -44,7 +44,7 @@ class _Page1State extends State<Page1> {
             child: Column(
               children: <Widget>[
                 Container(
-                  height: MediaQuery.of(context).size.height - 230.h,
+                  height: MediaQuery.of(context).size.height - 260.h,
                   child: Stack(
                     children: <Widget>[
                       PageView.builder(
